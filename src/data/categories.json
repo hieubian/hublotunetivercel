@@ -1,0 +1,35 @@
+[
+  {
+    "id": 3,
+    "category_name": "Men's Watches",
+    "category_name_vi": "Đồng hồ nam",
+    "category_description": "High-performance Hublot timepieces crafted for men: chronographs, tourbillons, divers and Integrated bracelets.",
+    "category_description_vi": "Đồng hồ Hublot hiệu năng cao dành cho nam: chronograph, tourbillon, lặn và phiên bản Integrated bracelet.",
+    "is_listed": 1,
+    "category_offer_percentage": "0.00",
+    "created_at": "2026-04-21T16:14:20.000Z",
+    "updated_at": "2026-04-21T16:14:20.000Z"
+  },
+  {
+    "id": 4,
+    "category_name": "Women's Watches",
+    "category_name_vi": "Đồng hồ nữ",
+    "category_description": "Hublot women collection with diamond settings, ceramic colours and refined case sizes from 33 to 39 mm.",
+    "category_description_vi": "Bộ sưu tập Hublot dành cho nữ với kim cương nạm, ceramic nhiều màu và đường kính 33–39 mm thanh lịch.",
+    "is_listed": 1,
+    "category_offer_percentage": "0.00",
+    "created_at": "2026-04-21T16:14:20.000Z",
+    "updated_at": "2026-04-21T16:14:20.000Z"
+  },
+  {
+    "id": 5,
+    "category_name": "Masterpiece",
+    "category_name_vi": "Masterpiece (Kiệt tác)",
+    "category_description": "MP — Hublot Masterpiece: limited and experimental haute horlogerie, tourbillons, power reserves up to 50 days.",
+    "category_description_vi": "Bộ sưu tập MP — Kiệt tác của Hublot: tourbillon, trữ cót đến 50 ngày, sản xuất giới hạn.",
+    "is_listed": 1,
+    "category_offer_percentage": "0.00",
+    "created_at": "2026-04-21T16:14:20.000Z",
+    "updated_at": "2026-04-21T16:14:20.000Z"
+  }
+]
