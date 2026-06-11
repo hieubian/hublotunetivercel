@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Script from 'next/script';
 
 interface ProductHeroClientProps {
     images: string[];
@@ -15,7 +16,11 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
     const [viewMode, setViewMode] = useState<'photo' | '3d'>('photo');
 
     return (
-        <div className={`hb-hero${hasModel3d ? ' hb-hero--has-rail' : ''}`} id="hbHero">
+        <>
+            {hasModel3d && (
+                <Script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js" strategy="lazyOnload" />
+            )}
+            <div className={`hb-hero${hasModel3d ? ' hb-hero--has-rail' : ''}`} id="hbHero">
             <div className="hb-hero__media-row">
                 <div className="hb-hero__media-cell">
                     <div className="hb-hero__media-visual">
@@ -108,5 +113,6 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
             </div>
         </div>
+        </>
     );
 }
