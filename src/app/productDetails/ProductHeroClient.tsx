@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Script from 'next/script';
+import React, { useState } from 'react';
 
 interface ProductHeroClientProps {
     images: string[];
@@ -13,24 +11,26 @@ interface ProductHeroClientProps {
 
 export default function ProductHeroClient({ images, productName, hasModel3d, model3dSrc }: ProductHeroClientProps) {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [viewMode, setViewMode] = useState<'photo' | '3d'>('photo');
 
     return (
-        <>
-            {hasModel3d && (
-                <Script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js" strategy="lazyOnload" />
-            )}
-            <div className={`hb-hero${hasModel3d ? ' hb-hero--has-rail' : ''}`} id="hbHero">
+        <div className={`hb-hero${hasModel3d ? ' hb-hero--has-rail' : ''}`} id="hbHero">
             <div className="hb-hero__media-row">
                 <div className="hb-hero__media-cell">
                     <div className="hb-hero__media-visual">
                         <div className={`hb-hero__media-stage${!hasModel3d ? ' hb-hero__media-stage--photo-only' : ''}`}>
                             
                             {/* PHOTO VIEW */}
-                            <div className={`hb-hero__photo-stack ${viewMode === '3d' ? 'hidden' : ''}`} style={{ display: viewMode === '3d' ? 'none' : 'block' }}>
+                            <div className="hb-hero__photo-stack" id="hbHeroPhotoPanel">
                                 <div className="hb-hero__gallery">
                                     {images.length > 0 && (
-                                        <img src={`/${images[activeIndex]}`} alt={productName} className="hb-hero__img" loading="eager" fetchPriority="high" draggable="false" />
+                                        <img 
+                                            id="heroMainImg"
+                                            src={`/${images[activeIndex]}`} 
+                                            alt={productName} 
+                                            className="hb-hero__img" 
+                                            loading="eager" 
+                                            draggable={false} 
+                                        />
                                     )}
                                 </div>
                                 {images.length > 1 && (
@@ -39,6 +39,7 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
                                             <div 
                                                 key={idx} 
                                                 className={`hb-hero__thumb ${idx === activeIndex ? 'hb-hero__thumb--active' : ''}`} 
+                                                data-image-path={img}
                                                 onClick={() => setActiveIndex(idx)}
                                                 style={{ cursor: 'pointer' }}
                                             >
@@ -51,20 +52,27 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
 
                             {/* 3D VIEW */}
                             {hasModel3d && (
-                                <div className={`hb-hero__model-wrap ${viewMode === 'photo' ? 'hidden' : ''}`} style={{ display: viewMode === 'photo' ? 'none' : 'block' }}>
+                                <div className="hb-hero__model-wrap" id="hbHeroModelWrap" hidden>
                                     <div className="hb-hero__model-frame">
-                                        {viewMode === '3d' && (() => {
-                                            const ModelViewer = 'model-viewer' as any;
-                                            return (
-                                                <ModelViewer 
-                                                    src={model3dSrc} 
-                                                    alt={`${productName} — 3D`} 
-                                                    camera-controls="true" 
-                                                    auto-rotate="true" 
-                                                    style={{ width: '100%', height: '100%', margin: '0 auto', display: 'block', backgroundColor: 'transparent' }}
-                                                ></ModelViewer>
-                                            );
-                                        })()}
+                                        <div 
+                                            className="hb-hero__model-host" 
+                                            id="hbModelHost"
+                                            data-model-src={model3dSrc}
+                                            data-model-alt={`${productName} — 3D`}
+                                            data-model-err="Could not load 3D model"
+                                        >
+                                            <div className="hb-hero__model-hint" id="hbModelLoadingHint" hidden>
+                                                Loading 3D model…
+                                            </div>
+                                        </div>
+                                        <div className="hb-hero__model-tip" id="hbModelTip" hidden>
+                                            Drag to rotate · Scroll to zoom
+                                        </div>
+                                        <div className="hb-hero__model-actions" id="hbModelActions" hidden>
+                                            <button type="button" className="hb-hero__model-reset" id="hbModelReset">
+                                                Reset View
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -79,8 +87,9 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
                                     <div className="hb-hero__rail-choices">
                                         <button 
                                             type="button" 
-                                            className={`hb-hero__rail-choice hb-hero__rail-choice--photo ${viewMode === 'photo' ? 'hb-hero__rail-choice--active' : ''}`} 
-                                            onClick={() => setViewMode('photo')}
+                                            id="hbHeroBtnPhoto"
+                                            className="hb-hero__rail-choice hb-hero__rail-choice--photo hb-hero__rail-choice--active" 
+                                            aria-pressed="true"
                                         >
                                             <svg className="hb-hero__rail-choice-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.35">
                                                 <rect x="3.5" y="5" width="17" height="14" rx="1" />
@@ -90,8 +99,9 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
                                         </button>
                                         <button 
                                             type="button" 
-                                            className={`hb-hero__rail-choice hb-hero__rail-choice--3d ${viewMode === '3d' ? 'hb-hero__rail-choice--active' : ''}`} 
-                                            onClick={() => setViewMode('3d')}
+                                            id="hbHeroBtn3d"
+                                            className="hb-hero__rail-choice hb-hero__rail-choice--3d" 
+                                            aria-pressed="false"
                                         >
                                             <svg className="hb-hero__rail-cube" viewBox="0 0 40 36" fill="none" stroke="currentColor" strokeWidth="1.35">
                                                 <path d="M20 2L36 10.5v15L20 34L4 25.5v-15L20 2z" strokeLinejoin="miter"/>
@@ -113,6 +123,5 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
             </div>
         </div>
-        </>
     );
 }

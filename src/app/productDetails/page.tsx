@@ -34,7 +34,6 @@ export default async function ProductDetails({ searchParams }: { searchParams: P
                 <>
                     <link rel="preconnect" href="https://ajax.googleapis.com" crossOrigin="anonymous" />
                     <link rel="dns-prefetch" href="https://ajax.googleapis.com" />
-                    <link rel="modulepreload" href="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" crossOrigin="anonymous" />
                     <link rel="preload" href={hbModel3dSrc} as="fetch" crossOrigin="anonymous" fetchPriority="high" />
                 </>
             )}
