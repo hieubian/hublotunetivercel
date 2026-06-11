@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface ProductHeroClientProps {
     images: string[];
@@ -47,16 +48,18 @@ export default function ProductHeroClient({ images, productName, hasModel3d, mod
                             {hasModel3d && (
                                 <div className={`hb-hero__model-wrap ${viewMode === 'photo' ? 'hidden' : ''}`} style={{ display: viewMode === 'photo' ? 'none' : 'block' }}>
                                     <div className="hb-hero__model-frame">
-                                        {viewMode === '3d' && (
-                                            <model-viewer 
-                                                src={model3dSrc} 
-                                                alt={`${productName} — 3D`} 
-                                                camera-controls 
-                                                shadow-intensity="1" 
-                                                auto-rotate 
-                                                style={{ width: '100%', height: '100%', minHeight: '500px' }}
-                                            ></model-viewer>
-                                        )}
+                                        {viewMode === '3d' && (() => {
+                                            const ModelViewer = 'model-viewer' as any;
+                                            return (
+                                                <ModelViewer 
+                                                    src={model3dSrc} 
+                                                    alt={`${productName} — 3D`} 
+                                                    camera-controls="true" 
+                                                    auto-rotate="true" 
+                                                    style={{ width: '100%', height: '100%', margin: '0 auto', display: 'block', backgroundColor: 'transparent' }}
+                                                ></ModelViewer>
+                                            );
+                                        })()}
                                     </div>
                                 </div>
                             )}

@@ -1,5 +1,6 @@
 import productsData from '@/data/products.json';
 import imagesData from '@/data/product_images.json';
+import collectionsData from '@/data/collections.json';
 import ProductDetailClient from './ProductDetailClient';
 import ProductHeroClient from './ProductHeroClient';
 
@@ -21,6 +22,9 @@ export default async function ProductDetails({ searchParams }: { searchParams: P
     const hbModel3dSrc = hasModel3d ? `/${product.product_model_3d}` : '';
 
     const displayDetail = product.product_detail_content || product.product_detail_content_vi || '';
+
+    const collection = collectionsData.find(c => c.id === product.collection_id);
+    const collectionName = collection ? collection.collection_name : '';
 
     const formatPrice = (p: number) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(p);
 
@@ -85,13 +89,13 @@ export default async function ProductDetails({ searchParams }: { searchParams: P
                     <div className="hb-watch-specs">
                         <h2 className="hb-watch-specs__title">Thông số kỹ thuật</h2>
                         <div className="hb-watch-specs__grid">
-                            {product.collection_name && (
+                            {collectionName && (
                                 <div className="hb-watch-specs__item">
                                     <div className="hb-watch-specs__label">
                                         <span className="hb-watch-specs__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M6 7V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2M9 11h6"/></svg></span>
                                         <span className="hb-watch-specs__label-text">Bộ sưu tập</span>
                                     </div>
-                                    <div className="hb-watch-specs__value">{product.collection_name}</div>
+                                    <div className="hb-watch-specs__value">{collectionName}</div>
                                 </div>
                             )}
                             {product.product_movement && (
